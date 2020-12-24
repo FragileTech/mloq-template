@@ -1,0 +1,22 @@
+template:
+  project_name: project_name
+  description: Template project generated with mloq.
+  owner: gh_owner
+  email: OWNER_EMAIL
+  author: AUTHOR
+  copyright_holder: COPYRIGHT_HOLDER
+  project_url: https://github.com/gh_owner/project_name
+  download_url: https://github.com/gh_owner/project_name.git
+  bot_name: BOT_NAME
+  bot_email: BOT_EMAIL
+  license: MIT
+  python_versions:
+    - '3.6'
+    - '3.7'
+    - '3.8'
+    - '3.9'
+  default_branch: master
+requirements:
+  - data-science
+  - data-viz
+workflow: python
