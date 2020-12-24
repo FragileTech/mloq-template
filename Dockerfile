@@ -1,4 +1,4 @@
-FROM fragiletech/ubuntu18.04-base-py39
+FROM fragiletech/ubuntu20.04-base-py39
 ARG JUPYTER_PASSWORD=""
 ENV BROWSER=/browser \
     LC_ALL=en_US.UTF-8 \
