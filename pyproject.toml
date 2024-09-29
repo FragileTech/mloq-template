@@ -81,26 +81,7 @@ docs = [
 [tool.rye]
 managed = true
 universal = true
-dev-dependencies = [
-    "autoapi>=2.0.1",
-    "ruff",
-    "sphinx",
-    "linkify-it-py",
-    "myst-parser",
-    "myst-nb",
-    "ruyaml",
-    "sphinx-autoapi",
-    "pydata-sphinx-theme",
-    "sphinx-autodoc2",
-    "sphinxcontrib-mermaid",
-    "sphinx_book_theme",
-    "sphinx_rtd_theme",
-    "jupyter-cache",
-    "sphinx-copybutton",
-    "sphinx-togglebutton",
-    "sphinxext-opengraph",
-    "sphinxcontrib-bibtex",
-]
+dev-dependencies = ["hatch"]
 [tool.hatch.metadata]
 # direct dependency references, e.g `pip @ git+https://github.com/pypa/pip.git@master`
 allow-direct-references = true
@@ -333,7 +314,7 @@ features = ["test"]
 run_pytest = "pytest -s -o log_cli=true -o log_cli_level=info {args}"
 doctest = "run_pytest --doctest-modules -n 0 {args:src}"
 test = ["doctest", "run_pytest {args:tests}"]
-cov = "run_pytest -n ${N} --cov-report=term-missing --cov-config=pyproject.toml --cov=src/mloq_template --cov=tests {args}"
+cov = "run_pytest -n auto --cov-report=term-missing --cov-config=pyproject.toml --cov=src/mloq_template --cov=tests {args}"
 no-cov = "cov --no-cov {args}"
 debug =  "cov --no-cov --pdb --pdbcls=IPython.core.debugger:Pdb {args}"
 [tool.hatch.envs.test.env-vars]

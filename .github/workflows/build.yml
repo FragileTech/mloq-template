@@ -1,19 +1,25 @@
 name: Build
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 env:
-  PROJECT_NAME: hydraclick
-  PROJECT_DIR: src/hydraclick
-  VERSION_FILE: src/hydraclick/version.py
+  PROJECT_NAME: mloq_template
+  PROJECT_DIR: src/mloq_template
+  VERSION_FILE: src/mloq_template/version.py
   DEFAULT_BRANCH: main
   BOT_NAME: fragile-bot
   BOT_EMAIL: bot@fragile.tech
   DOCKER_ORG: fragiletech
-  LOCAL_CACHE: |
-    ~/.local/bin
-    ~/.local/lib/python3.*/site-packages
-    /opt/homebrew
+#  LOCAL_CACHE: |
+#    ~/.local/bin
+#    ~/.local/lib/python3.*/site-packages
+#    /opt/homebrew
 
 
 jobs:
@@ -24,17 +30,12 @@ jobs:
     steps:
       - name: actions/checkout
         uses: actions/checkout@v4
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
       - name: Setup Rye
         id: setup-rye
         uses: eifinger/setup-rye@v4
         with:
           enable-cache: true
           cache-prefix: ubuntu-20.04-rye-check-${{ hashFiles('pyproject.toml') }}
-
       - name: Run style check and linter
         run: |
           set -x
@@ -47,14 +48,10 @@ jobs:
     strategy:
       matrix:
         os: ["ubuntu-latest", "macos-latest"]
-        python_version: ['3.10']
+        python-version: ['3.10']
 
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python_version }}
 
       - name: Setup Rye
         id: setup-rye
@@ -63,12 +60,12 @@ jobs:
           enable-cache: true
           cache-prefix: ${{ matrix.os }}-latest-rye-test-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
 
-      - name: actions/cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.LOCAL_CACHE }}
-          key: ${{ matrix.os }}-latest-rye-test-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
-          restore-keys: ${{ matrix.os }}-latest-rye-test-${{ matrix.python-version }}
+#      - name: actions/cache
+#        uses: actions/cache@v4
+#        with:
+#          path: ${{ env.LOCAL_CACHE }}
+#          key: ${{ matrix.os }}-latest-rye-test-${{ matrix.python-version }}-${{ hashFiles('pyproject.toml') }}
+#          restore-keys: ${{ matrix.os }}-latest-rye-test-${{ matrix.python-version }}
 
       - name: Install Ubuntu test and package dependencies
         if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -99,7 +96,7 @@ jobs:
       - name: Upload coverage report
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        if: ${{ matrix.python_version == '3.10' && matrix.os == 'ubuntu-latest' && env.CODECOV_TOKEN != '' }}
+        if: ${{ matrix.python-version == '3.10'  && matrix.os == 'ubuntu-latest' && env.CODECOV_TOKEN != '' }}
         uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: false # optional (default = false)
@@ -114,29 +111,36 @@ jobs:
     needs: style-check
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'Bump version')"
+    permissions:
+      contents: write
+      id-token: write
     steps:
       - name: actions/checkout
-        uses: actions/checkout@v3
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v2
+        uses: actions/checkout@v4
         with:
-          python-version: '3.10'
+          persist-credentials: false
+          fetch-depth: 100
+      - name: Set Git user
+        run: |
+          git config --global user.name "${{ env.BOT_NAME }}"
+          git config --global user.email "${{ env.BOT_EMAIL }}"
+
       - name: Setup Rye
         id: setup-rye
         uses: eifinger/setup-rye@v4
         with:
           enable-cache: true
           cache-prefix: ubuntu-latest-rye-build-3.10-${{ hashFiles('pyproject.toml') }}
-      - name: actions/cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.LOCAL_CACHE }}
-          key: ubuntu-latest-system-build-3.10-${{ hashFiles('pyproject.toml') }}
-          restore-keys: ubuntu-latest-system-test
+#      - name: actions/cache
+#        uses: actions/cache@v4
+#        with:
+#          path: ${{ env.LOCAL_CACHE }}
+#          key: ubuntu-latest-system-build-3.10-${{ hashFiles('pyproject.toml') }}
+#          restore-keys: ubuntu-latest-system-test
       - name: Install build dependencies
         run: |
           set -x
-          pip install uv
+          rye pin --relaxed cpython@3.10
           rye install bump2version
           rye install twine
 
@@ -154,7 +158,7 @@ jobs:
           rye build --clean
           twine check dist/*
 
-      - name: Publish package to TestPyPI
+      - name: Publish 📦 to Test PyPI
         env:
           TEST_PYPI_PASS: ${{ secrets.TEST_PYPI_PASS }}
         if: "'$TEST_PYPI_PASS' != ''"
@@ -173,10 +177,9 @@ jobs:
     needs:
       - pytest-rye
       - build-test-package
-      # - test-docker
     steps:
       - name: actions/checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
           fetch-depth: 100
@@ -202,14 +205,13 @@ jobs:
     env:
       PYPI_PASS: ${{ secrets.PYPI_PASS }}
     if: "contains(github.event.head_commit.message, 'Bump version') && github.ref == 'refs/heads/main' && '$PYPI_PASS' != ''"
+    permissions:
+      contents: write
+      id-token: write
     runs-on: ubuntu-latest
     steps:
       - name: actions/checkout
-        uses: actions/checkout@v3
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.10'
+        uses: actions/checkout@v4
       - name: Setup Rye
         id: setup-rye
         uses: eifinger/setup-rye@v4
@@ -219,6 +221,7 @@ jobs:
       - name: Install dependencies
         run: |
           set -x
+          rye pin --relaxed cpython@3.10
           rye install twine
 
       - name: Build package
@@ -227,7 +230,7 @@ jobs:
           rye build --clean
           twine check dist/*
 
-      - name: Publish package to PyPI
+      - name: Publish 📦 to PyPI
         env:
           PYPI_PASS: ${{ secrets.PYPI_PASS }}
         if: "'$PYPI_PASS' != ''"
@@ -247,7 +250,7 @@ jobs:
 #
 #    steps:
 #      - uses: actions/checkout@v4
-#      - name: Set up Python ${{ matrix.python_version }}
+#      - name: Set up Python ${{ matrix.python-version }}
 #        uses: actions/setup-python@v5
 #        with:
 #          python-version: '3.10'
