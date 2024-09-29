@@ -1,9 +1,97 @@
-# project_name
-[![Documentation Status](https://readthedocs.org/projects/fragile/badge/?version=latest)](https://project_name.readthedocs.io/en/latest/?badge=latest)
-[![Code coverage](https://codecov.io/github/gh_owner/project_name/coverage.svg)](https://codecov.io/github/gh_owner/project_name)
-[![PyPI package](https://badgen.net/pypi/v/project_name)](https://pypi.org/project/project_name/)
-[![Latest docker image](https://badgen.net/docker/pulls/gh_owner/project_name)](https://hub.docker.com/r/gh_owner/project_name/tags)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-[![license: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
+========
+Overview
+========
 
-Template project generated with mloq.
+.. start-badges
+
+.. list-table::
+    :stub-columns: 1
+
+    * - docs
+      - |docs|
+    * - tests
+      - |github-actions| |codecov|
+    * - package
+      - |version| |wheel| |supported-versions| |supported-implementations| |commits-since|
+.. |docs| image:: https://readthedocs.org/projects/mloq-template/badge/?style=flat
+    :target: https://readthedocs.org/projects/mloq-template/
+    :alt: Documentation Status
+
+.. |github-actions| image:: https://github.com/guillemdb/mloq-template/actions/workflows/github-actions.yml/badge.svg
+    :alt: GitHub Actions Build Status
+    :target: https://github.com/guillemdb/mloq-template/actions
+
+.. |codecov| image:: https://codecov.io/gh/guillemdb/mloq-template/branch/main/graphs/badge.svg?branch=main
+    :alt: Coverage Status
+    :target: https://app.codecov.io/github/guillemdb/mloq-template
+
+.. |version| image:: https://img.shields.io/pypi/v/mloq-template.svg
+    :alt: PyPI Package latest release
+    :target: https://pypi.org/project/mloq-template
+
+.. |wheel| image:: https://img.shields.io/pypi/wheel/mloq-template.svg
+    :alt: PyPI Wheel
+    :target: https://pypi.org/project/mloq-template
+
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/mloq-template.svg
+    :alt: Supported versions
+    :target: https://pypi.org/project/mloq-template
+
+.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/mloq-template.svg
+    :alt: Supported implementations
+    :target: https://pypi.org/project/mloq-template
+
+.. |commits-since| image:: https://img.shields.io/github/commits-since/guillemdb/mloq-template/v0.0.0.svg
+    :alt: Commits since latest release
+    :target: https://github.com/guillemdb/mloq-template/compare/v0.0.0...main
+
+
+
+.. end-badges
+
+An example package. Generated with cookiecutter-pylibrary.
+
+* Free software: BSD 2-Clause License
+
+Installation
+============
+
+::
+
+    pip install mloq-template
+
+You can also install the in-development version with::
+
+    pip install https://github.com/guillemdb/mloq-template/archive/main.zip
+
+
+Documentation
+=============
+
+
+https://mloq-template.readthedocs.io/
+
+
+Development
+===========
+
+To run all the tests run::
+
+    tox
+
+Note, to combine the coverage data from all the tox environments run:
+
+.. list-table::
+    :widths: 10 90
+    :stub-columns: 1
+
+    - - Windows
+      - ::
+
+            set PYTEST_ADDOPTS=--cov-append
+            tox
+
+    - - Other
+      - ::
+
+            PYTEST_ADDOPTS=--cov-append tox
