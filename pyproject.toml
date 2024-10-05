@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mloq-template"
-description = "An example package. Generated with cookiecutter-pylibrary."
+description = "Automate project creation following ML best practices."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { file = "LICENSE" }
@@ -51,7 +51,7 @@ dependencies = [
 # important URLs for this project
 Documentation = "https://mloq-template.readthedocs.io/"
 Changelog = "https://mloq-template.readthedocs.io/en/latest/changelog.html"
-Tracker = "https://github.com/guillemdb/mloq-template/issues"
+Tracker = "https://github.com/FragileTech/mloq-template/issues"
 [project.scripts]
 mloq-template = "mloq_template.__main__:run"
 
@@ -260,7 +260,7 @@ enable = """,
 # To disable a specific warning --> action:message:category:module:line
 filterwarnings = ["ignore::UserWarning", 'ignore::DeprecationWarning']
 addopts = "--ignore=scripts --doctest-continue-on-failure"
-
+python_files = ["test_*.py", "tests.py", "test.py"]
 # Code coverage config
 [tool.coverage.run]
 branch = true
@@ -312,7 +312,7 @@ description = "Run tests and coverage"
 features = ["test"]
 [tool.hatch.envs.test.scripts]
 run_pytest = "pytest -s -o log_cli=true -o log_cli_level=info {args}"
-doctest = "run_pytest --doctest-modules -n 0 {args:src}"
+doctest = "run_pytest --doctest-modules --doctest-glob=\\*.md -n 0 {args:src}"
 test = ["doctest", "run_pytest {args:tests}"]
 cov = "run_pytest -n auto --cov-report=term-missing --cov-config=pyproject.toml --cov=src/mloq_template --cov=tests {args}"
 no-cov = "cov --no-cov {args}"
