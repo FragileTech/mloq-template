@@ -27,7 +27,7 @@ default_context:
     github_actions: "yes"
     github_actions_osx: "yes"
     github_actions_windows: "yes"
-    license: "BSD 2-Clause License"
+    license: "MIT license"
     line_length: "99"
     lock_file_support: false
     module_name: "core"

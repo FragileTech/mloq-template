@@ -2,6 +2,9 @@
 
 Contributions are welcome, and they are greatly appreciated! Every little bit helps, and credit will always be given.
 
+```{contents}
+```
+
 ## Bug reports
 
 When [reporting a bug](https://github.com/FragileTech/mloq-template/issues) please include:

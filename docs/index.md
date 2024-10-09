@@ -1,4 +1,5 @@
-# Welcome to MLOQ Template Jupyter Book
+```{include} source/project/README.md
+```
 
 This is the main documentation page for **MLOQ Template**.
 

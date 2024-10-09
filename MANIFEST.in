@@ -13,7 +13,6 @@ include .readthedocs.yml
 include pyproject.toml
 include pytest.ini
 
-
 include AUTHORS.md
 include CHANGELOG.md
 include CONTRIBUTING.md

@@ -8,6 +8,7 @@ Why does this file exist, and why __main__? For more info, read:
 """
 
 import sys
+
 from mloq_template.cli import run
 
 

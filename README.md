@@ -1,9 +1,9 @@
-# MLOQ Template
+# Welcome to MLOQ Template
 
 Automate project creation following ML best practices.
 
 
-* Free software: BSD 2-Clause License
+* License: MIT license
 
 
 ## Features
@@ -20,12 +20,8 @@ This is an "all inclusive" sort of template.
 - Documentation with [Sphinx](http://sphinx-doc.org/), ready for [ReadTheDocs](https://readthedocs.org/).
 
 - Configurations for:
-  - [isort](https://pypi.org/project/isort)
   - [bumpversion](https://pypi.org/project/bump2version) ([bump2version](https://github.com/c4urself/bump2version) required)
   - [ruff](https://docs.astral.sh/ruff/) for linting and formatting your code.
-- Packaging and code quality checks. This template comes with a Hatch environment (`check`) that will:
-  - Check if your `README.md` is valid.
-  - Check if the `MANIFEST.in` has any issues.
 
 ## Requirements
 
@@ -242,14 +238,14 @@ Name of the CLI bin/executable file (set the console script name in `pyproject.t
 **Default**:
 
 ```python
-"BSD 2-Clause License"
+"MIT license"
 ```
 
 License to use. Available options:
 
+- MIT license
 - BSD 2-Clause License
 - BSD 3-Clause License
-- MIT license
 - ISC license
 - Apache Software License 2.0
 - GNU Lesser General Public License v3 or later (LGPLv3+)
